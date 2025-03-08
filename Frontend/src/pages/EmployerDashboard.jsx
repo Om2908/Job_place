@@ -91,9 +91,10 @@ const EmployerDashboard = () => {
                 {stats?.recentApplications?.map((application) => (
                   <div key={application._id} className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 transition-all duration-200">
                     <div className="flex justify-between items-start">
-                      <div>
+                      <div> 
                         <h3 className="font-medium text-gray-900">{application.jobId.title}</h3>
-                        <p className="text-sm text-gray-600">{application.seekerId.name}</p>
+                        
+                        <p className="text-sm text-gray-600">{application.seekerId?.name}</p>
                         <p className="mt-1 text-xs text-gray-500">
                           Applied {new Date(application.createdAt).toLocaleDateString()}
                         </p>

@@ -3,6 +3,7 @@ import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { getProfile, updateBasicProfile, updateExperience, updateEducation, updateSkills, uploadResume } from '../services/profileService';
 import { FaUser, FaEnvelope, FaBriefcase, FaGraduationCap, FaTools, FaFileAlt, FaPlus, FaTrash, FaBuilding, FaMapMarkerAlt, FaUpload, FaCalendar } from 'react-icons/fa';
+import '../App.css';
 
 const UpdateProfile = () => {
   const [activeTab, setActiveTab] = useState('basic');
@@ -135,7 +136,7 @@ const UpdateProfile = () => {
     return (
       <div className="min-h-screen pt-20 flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
         <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+           <div class="loader"></div>
           <p className="text-gray-600">Loading your profile...</p>
         </div>
       </div>

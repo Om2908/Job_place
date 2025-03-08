@@ -21,6 +21,7 @@ import AuthCallback from './pages/AuthCallback';
 import SavedJobs from './pages/SavedJobs';
 import UpdateProfile from './pages/UpdateProfile';
 import Profile from './pages/Profile';
+import CommunityChat from './components/CommunityChat';
 
 export const AuthContext = createContext();
 
@@ -125,6 +126,14 @@ function App() {
                 element={
                   <ProtectedRoute allowedRoles={['job_seeker']}>
                     <Profile />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/community" 
+                element={
+                  <ProtectedRoute allowedRoles={['job_seeker']}>
+                    <CommunityChat />
                   </ProtectedRoute>
                 } 
               />

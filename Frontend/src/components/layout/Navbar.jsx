@@ -54,6 +54,12 @@ const Navbar = () => {
                     >
                       Profile
                     </Link>
+                    <Link
+                      to="/community"
+                      className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                      Community
+                    </Link>
                   </>
                 )}
                 {user.role === 'employer' && (
