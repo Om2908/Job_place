@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../App';
 import { logout } from '../../services/authService';
 import { toast } from 'react-hot-toast';
@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast';
 const Navbar = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
     try {
@@ -32,7 +33,7 @@ const Navbar = () => {
             <span className="text-xl font-bold text-gray-900">CareerHub</span>
           </Link>
 
-          {/* Navigation Links */}
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/jobs" className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
               All Jobs
@@ -71,7 +72,7 @@ const Navbar = () => {
                   </Link>
                 )}
                 <div className="flex items-center space-x-4">
-                  <span className="text-gray-600 text-sm">Hi,{user.name}</span>
+                  <span className="text-gray-600 text-sm">Hi, {user.name}</span>
                   <button
                     onClick={handleLogout}
                     className="text-sm px-4 py-2 rounded-full text-blue-600 hover:bg-blue-50 font-medium transition-colors"
@@ -100,19 +101,106 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button className="text-gray-600 hover:text-blue-600 focus:outline-none">
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+            <button 
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-gray-600 hover:text-blue-600 focus:outline-none"
+            >
+              {isOpen ? (
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <div className="md:hidden">
-        {/* Add mobile menu items here */}
-      </div>
+      {isOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200">
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            <Link 
+              to="/jobs"
+              onClick={() => setIsOpen(false)}
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+            >
+              All Jobs
+            </Link>
+
+            {user ? (
+              <>
+                {user.role === 'job_seeker' && (
+                  <>
+                    <Link 
+                      to="/dashboard"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link 
+                      to="/profile"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                    >
+                      Profile
+                    </Link>
+                    <Link
+                      to="/community"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                    >
+                      Community
+                    </Link>
+                  </>
+                )}
+                {user.role === 'employer' && (
+                  <Link 
+                    to="/employer/dashboard"
+                    onClick={() => setIsOpen(false)}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                  >
+                    Dashboard
+                  </Link>
+                )}
+                <div className="px-3 py-2 border-t border-gray-200 mt-2">
+                  <span className="block text-gray-600 font-medium mb-2">Hi, {user.name}</span>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="px-3 py-2 space-y-2">
+                <Link 
+                  to="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full px-4 py-2 text-center rounded-md text-blue-600 hover:bg-blue-50 font-medium"
+                >
+                  Sign In
+                </Link>
+                <Link 
+                  to="/register"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full px-4 py-2 text-center rounded-md bg-blue-600 text-white hover:bg-blue-700 font-medium"
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

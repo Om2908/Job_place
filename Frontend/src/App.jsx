@@ -22,6 +22,7 @@ import SavedJobs from './pages/SavedJobs';
 import UpdateProfile from './pages/UpdateProfile';
 import Profile from './pages/Profile';
 import CommunityChat from './components/CommunityChat';
+import ChatBot from './components/ChatBot';
 
 export const AuthContext = createContext();
 
@@ -49,6 +50,7 @@ function App() {
           
           <div className="min-h-screen bg-gray-50">
             <Navbar />
+            <ChatBot />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/jobs" element={<Jobs />} />
@@ -137,6 +139,10 @@ function App() {
                   </ProtectedRoute>
                 } 
               />
+              
+             
+              
+             
             </Routes>
           </div>
         </BrowserRouter>

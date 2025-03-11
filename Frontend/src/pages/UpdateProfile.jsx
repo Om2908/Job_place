@@ -184,7 +184,7 @@ const UpdateProfile = () => {
                 className="space-y-6"
               >
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                  <label className="block text-sm font-medium text-gray-700 mb-2  items-center">
                     <FaUser className="w-4 h-4 mr-2 text-blue-600" />
                     Full Name
                   </label>
@@ -197,7 +197,7 @@ const UpdateProfile = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                  <label className="block text-sm font-medium text-gray-700 mb-2  items-center">
                     <FaEnvelope className="w-4 h-4 mr-2 text-blue-600" />
                     Email
                   </label>
@@ -288,7 +288,7 @@ const UpdateProfile = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                        <label className="block text-sm font-medium text-gray-700 mb-1  items-center">
                           <FaCalendar className="w-4 h-4 mr-2 text-blue-600" />
                           Years of Experience
                         </label>
@@ -453,7 +453,7 @@ const UpdateProfile = () => {
                 className="space-y-6"
               >
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                  <label className="block text-sm font-medium text-gray-700 mb-2  items-center">
                     <FaTools className="w-4 h-4 mr-2 text-blue-600" />
                     Skills (comma separated)
                   </label>
@@ -500,7 +500,7 @@ const UpdateProfile = () => {
                 className="space-y-6"
               >
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                  <label className="block text-sm font-medium text-gray-700 mb-2 items-center">
                     <FaFileAlt className="w-4 h-4 mr-2 text-blue-600" />
                     Upload Resume
                   </label>

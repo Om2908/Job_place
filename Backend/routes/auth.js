@@ -18,7 +18,7 @@ router.get('/google/callback',
   }),
   async (req, res) => {
     try {
-      console.log("Google callback user:", req.user); // Debug log
+      // console.log("Google callback user:", req.user); 
 
       // Generate JWT token
       const token = jwt.sign(
@@ -31,7 +31,7 @@ router.get('/google/callback',
         { expiresIn: '1d' }
       );
 
-      console.log("Generated token:", token); // Debug log
+      // console.log("Generated token:", token); // Debug log
 
       // Redirect to frontend with token
       res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`);
@@ -52,7 +52,7 @@ router.get('/github/callback',
   }),
   async (req, res) => {
     try {
-      console.log("Github callback user:", req.user); // Debug log
+      // console.log("Github callback user:", req.user); 
 
       // Generate JWT token
       const token = jwt.sign(

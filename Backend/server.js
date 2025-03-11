@@ -8,26 +8,34 @@ const passport = require('passport');
 require('./confing/passport');
 const fileUpload = require('express-fileupload');
 const path = require('path');
+const {GoogleGenerativeAI}  =require('@google/generative-ai');
 
-// Socket.io setup
+
 const http = require('http');
-const { Server } = require('socket.io');  // Changed import
+const { Server } = require('socket.io');  
 
 dotenv.config();
 const app = express();
 
-// Create HTTP server
-const server = http.createServer(app);
 
-// Setup Socket.io
-const io = new Server(server, {  // Changed initialization
+const gemini_api_key = process.env.API_KEY;
+const googleAI = new GoogleGenerativeAI(gemini_api_key);
+const geminiModel = googleAI.getGenerativeModel({
+  model: "gemini-1.5-flash",
+});
+
+
+
+
+
+const server = http.createServer(app);
+const io = new Server(server, {  
   cors: {
     origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST"]
   }
 });
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(fileUpload({ 
@@ -41,43 +49,55 @@ app.use(session({secret: 'omitaliya',resave: false,saveUninitialized: true,cooki
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Store io instance on app
+const generate = async (question) => {
+  try {
+    const prompt = question;
+    const result = await geminiModel.generateContent(prompt);
+    const response = result.response;
+    console.log(response.text());
+    return response.text();
+  } catch (error) {
+    console.log("response error", error);
+  }
+};
+
+app.post('/api/content', async (req, res) => {
+    var result = await generate(req.body.answer);
+    console.log(result);
+    res.json({"result" : result});
+})
+
+
+
+
 app.set('io', io);
 
-// Socket connection handling
-// let onlineUsers = 0;
-
 io.on('connection', (socket) => {
-  console.log('User connected:', socket.id);
-  // onlineUsers++;
-  // io.emit('onlineUsers', onlineUsers);
+  console.log("Client Connected");
 
   socket.on('authenticate', async (userId) => {
     socket.join(userId);
-    console.log('User authenticated:', userId);
   });
 
   socket.on('disconnect', () => {
-    console.log('User disconnected:', socket.id);
-    // onlineUsers--;
-    // io.emit('onlineUsers', onlineUsers);
+    console.log("Client Disconnected");
+   
   });
 });
 
-// Make io available in routes
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
 
-// Routes
+
 const authRoutes = require('./routes/auth');
 const jobRoutes = require('./routes/job');
 const applicationRoutes = require('./routes/application');
 const dashboardRoutes = require('./routes/dashboard');
 const adminRoutes = require('./routes/admin');
 const profileRoutes = require('./routes/profile');
-const chatRoutes = require('./routes/chat');  // Added chat routes
+const chatRoutes = require('./routes/chat'); 
 
 app.use('/auth', authRoutes);
 app.use('/job', jobRoutes);
@@ -85,27 +105,27 @@ app.use('/application', applicationRoutes);
 app.use('/dashboard', dashboardRoutes);
 app.use('/admin', adminRoutes);
 app.use('/profile', profileRoutes);
-app.use('/chat', chatRoutes);  // Added chat routes
+app.use('/chat', chatRoutes);  
 
 app.use(express.urlencoded({ extended: true }));
 
-// Home route
+
 app.get('/', (req, res) => {
-  res.send('API is running...');  // Removed req.user.name as it might not exist
+  res.send('API is running...');  
+  // console.log("session ID :",req.sessionID);
 });
 
-// Database connection
+
 connectDB()
   .then(() => {
-    console.log('Database connected successfully');
+    // console.log('Database connected successfully');
   })
   .catch((err) => {
     console.error('Database connection error:', err);
   });
 
-// Start server
+
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`Socket.io listening for connections`);
 });

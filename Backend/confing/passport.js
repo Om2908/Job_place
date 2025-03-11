@@ -8,18 +8,16 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.BACKEND_URL}/auth/google/callback`,
+      callbackURL: "http://localhost:3000/auth/google/callback",
       passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
-        console.log("Google profile:", profile); // Debug log
-
-        // Check if user already exists
+        // console.log("Google profile:", profile); 
         let user = await User.findOne({ email: profile.emails[0].value });
         
         if (user) {
-          console.log("Existing user found:", user); // Debug log
+          // console.log("Existing user found:", user); 
           return done(null, user);
         }
 
@@ -32,7 +30,7 @@ passport.use(
           role: 'job_seeker' // Default role
         });
 
-        console.log("New user created:", user); // Debug log
+        console.log("New user created:", user); 
         return done(null, user);
       } catch (error) {
         console.error("Google auth error:", error); // Error log
