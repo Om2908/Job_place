@@ -5,12 +5,12 @@ const API_URL = 'http://localhost:3000/auth';
 // Register user
 export const register = async (userData) => {
   try {
-    console.log('Sending registration data:', userData); // Debug log
+    console.log('Sending registration data:', userData); 
     const response = await axios.post(`${API_URL}/register`, userData);
-    console.log('Registration response:', response.data); // Debug log
+    console.log('Registration response:', response.data); 
     return response.data;
   } catch (error) {
-    console.error('Registration error:', error.response?.data || error); // Debug log
+    console.error('Registration error:', error.response?.data || error); 
     if (error.response?.data) {
       throw error.response.data;
     } else {
@@ -27,13 +27,11 @@ export const login = async (credentials) => {
     console.log('Login response:', response.data);
     
     if (response.data.token) {
-      // Store token and user data in localStorage
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
-      
-      // Return the complete response data
       return response.data;
-    } else {
+    } 
+    else {
       throw new Error('No token received');
     }
   } catch (error) {
@@ -81,12 +79,11 @@ export const getCurrentUser = () => {
       email: payload.email
     };
   } catch (error) {
-    console.error("getCurrentUser error:", error); // Error log
+    console.error("getCurrentUser error:", error); 
     return null;
   }
 };
 
-// Add this function
 export const forgotPassword = async (email) => {
   try {
     const response = await axios.post(`${API_URL}/forgot-password`, { email });
@@ -100,7 +97,7 @@ export const forgotPassword = async (email) => {
   }
 };
 
-// Add resetPassword function
+// resetPassword 
 export const resetPassword = async (token, newPassword) => {
   try {
     const response = await axios.post(`${API_URL}/reset-password`, {
@@ -119,7 +116,6 @@ export const resetPassword = async (token, newPassword) => {
 
 export const verifyOTP = async (data) => {
   try {
-    // Ensure OTP is number
     const payload = {
       email: data.email,
       otp: parseInt(data.otp)

@@ -15,14 +15,13 @@ const applyForJob = async (req, res) => {
     const {  coverLetter } = req.body;
 
     console.log(req.files)
-     // Check if file is uploaded
      if (!req.files || !req.files.resume) {
       return res.status(400).json({ error: 'Resume file is required' });
     }
 
     const resumeFile = req.files.resume;
 
-    // Validate file type (Only PDF allowed)
+    // Only pdf type file validate
     if (resumeFile.mimetype !== 'application/pdf') {
       return res.status(400).json({ error: 'Only PDF resumes are allowed' });
     }
@@ -56,8 +55,6 @@ const applyForJob = async (req, res) => {
    
     await application.save();
    
-
-    // Real-time notification to employer
     req.io.to(job.postedBy._id.toString()).emit('newApplication', {
       type: 'application',
       jobTitle: job.title,
@@ -193,11 +190,6 @@ const updateApplicationStatus = async (req, res) => {
 };
 
 
-
-
-
-
-
 const getApplicationsForJob = async (req, res) => {
   try {
     const { jobId } = req.params;
@@ -262,7 +254,6 @@ const updateApplication = async (req, res) => {
     });
     await notification.save();
 
-    // Emit socket event
     req.io.to(application.seekerId.toString()).emit('applicationUpdate', {
       applicationId: application._id,
       status,

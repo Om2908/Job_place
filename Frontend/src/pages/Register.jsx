@@ -7,7 +7,7 @@ import { FaEye, FaEyeSlash, FaBriefcase, FaUserTie } from "react-icons/fa";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(1); // Start with step 1 for role selection
+  const [step, setStep] = useState(1); 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -53,7 +53,6 @@ const Register = () => {
     newOtpValues[index] = value;
     setOtpValues(newOtpValues);
 
-    // Auto focus next input
     if (value !== '' && index < 5) {
       inputRefs.current[index + 1].focus();
     }
@@ -67,7 +66,6 @@ const Register = () => {
   };
 
   useEffect(() => {
-    // Only start timer if timeLeft is not null and greater than 0
     if (timeLeft !== null && timeLeft > 0 && !isExpired) {
       const timer = setInterval(() => {
         setTimeLeft(prev => prev - 1);
@@ -89,12 +87,11 @@ const Register = () => {
     
     setLoading(true);
     try {
-      // Convert OTP array to string then to number
       const numericOTP = parseInt(otpString);
       
       await verifyOTP({ 
         email: formData.email, 
-        otp: numericOTP // Send as number, not string
+        otp: numericOTP
       });
       
       toast.success('Email verified successfully!');

@@ -31,12 +31,12 @@ router.get('/google/callback',
         { expiresIn: '1d' }
       );
 
-      // console.log("Generated token:", token); // Debug log
+      // console.log("Generated token:", token); 
 
       // Redirect to frontend with token
       res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`);
     } catch (error) {
-      console.error("Callback error:", error); // Error log
+      console.error("Callback error:", error); 
       res.redirect(`${process.env.FRONTEND_URL}/login?error=auth_failed`);
     }
   }
@@ -65,12 +65,12 @@ router.get('/github/callback',
         { expiresIn: '1d' }
       );
 
-      console.log("Generated token:", token); // Debug log
+      console.log("Generated token:", token); 
 
       // Redirect to frontend with token
       res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`);
     } catch (error) {
-      console.error("Callback error:", error); // Error log
+      console.error("Callback error:", error); 
       res.redirect(`${process.env.FRONTEND_URL}/login?error=auth_failed`);
     }
   }

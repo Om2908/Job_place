@@ -4,11 +4,10 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL
 });
 
-// Add token to every request
 instance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    console.log('Token:', token); // Debug log
+    console.log('Token:', token); 
     if (token) {
       config.headers.token = token;
     }

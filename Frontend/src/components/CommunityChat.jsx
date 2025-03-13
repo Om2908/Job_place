@@ -18,8 +18,6 @@ const CommunityChat = () => {
   useEffect(() => {
     // Connect to socket
     socketRef.current = io(import.meta.env.VITE_BACKEND_URL);
-
-    // Load initial messages
     fetchMessages();
 
     // Listen for new messages
@@ -31,11 +29,6 @@ const CommunityChat = () => {
       setMessages(prev => [...prev, formattedMessage]);
       scrollToBottom();
     });
-
-    // Listen for online users count
-    // socketRef.current.on('onlineUsers', (count) => {
-    //   setOnlineUsers(count);
-    // });
 
     return () => {
       if (socketRef.current) {
@@ -55,7 +48,6 @@ const CommunityChat = () => {
   const fetchMessages = async () => {
     try {
       const response = await axios.get('/chat/messages');
-      // Compare sender ID with current user ID to maintain alignment
       const formattedMessages = response.data.map(message => ({
         ...message,
         isMyMessage: message.sender._id === user._id

@@ -25,13 +25,12 @@ const createUser = async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    // Generate OTP
+    // OTP
     const otp = Math.floor(100000 + Math.random() * 900000);
     const otpExpires = new Date(Date.now() + 45 * 1000); // 45 seconds
 
@@ -156,7 +155,6 @@ const forgotPassword = async (req, res) => {
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
     await user.save();
 
-    // Create reset URL - Update this URL to match your frontend URL
     const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
     console.log('Reset URL:', resetUrl); // Debug log
 
@@ -202,7 +200,7 @@ const forgotPassword = async (req, res) => {
       console.log('Password reset email sent successfully');
       res.json({ 
         message: 'Password reset link sent to your email',
-        debug: { resetUrl } // Remove this in production
+        debug: { resetUrl } 
       });
     } catch (emailError) {
       console.error('Error sending email:', emailError);
@@ -306,7 +304,7 @@ const verifyOTP = async (req, res) => {
   }
 };
 
-// Add resend OTP endpoint
+// Add resend OTP 
 const resendOTP = async (req, res) => {
   try {
     const { email } = req.body;

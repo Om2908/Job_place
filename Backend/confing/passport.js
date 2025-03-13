@@ -21,19 +21,19 @@ passport.use(
           return done(null, user);
         }
 
-        // If user doesn't exist, create new user
+        // create new user
         user = await User.create({
           name: profile.displayName,
           email: profile.emails[0].value,
           provider: 'google',
           googleId: profile.id,
-          role: 'job_seeker' // Default role
+          role: 'job_seeker' 
         });
 
         console.log("New user created:", user); 
         return done(null, user);
       } catch (error) {
-        console.error("Google auth error:", error); // Error log
+        console.error("Google auth error:", error); 
         return done(error, null);
       }
     }
@@ -50,7 +50,6 @@ passport.use(
     },
     async function(accessToken, refreshToken, profile, done) {
       try {
-        // Find user by githubId or email
         let user = await User.findOne({ 
           $or: [
             { githubId: profile.id },

@@ -38,7 +38,7 @@ const AdminDashboard = () => {
     try {
       await axios.patch(`/job/${status}/${jobId}`, { remarks });
       toast.success(`Job ${status} successfully`);
-      fetchDashboardData(); // Refresh data
+      fetchDashboardData(); 
     } catch (error) {
       toast.error(`Failed to ${status} job`);
     }

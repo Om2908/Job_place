@@ -166,7 +166,6 @@ const Login = () => {
               onClick={handleLinkedInLogin}
               className="w-full flex items-center justify-center px-4 py-2 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all duration-200"
             >
-              {/* <img src="/linkedin.svg" alt="LinkedIn" className="w-5 h-5 mr-3" /> */}
               <FaGithub />
               <span className="text-gray-700 font-medium ml-4">Continue with Github</span>
             </button>

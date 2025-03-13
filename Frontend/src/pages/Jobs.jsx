@@ -35,7 +35,6 @@ const Jobs = () => {
       const response = await getAllJobs(filters);
       setJobs(response.jobs || []);
       
-      // If user is logged in, get their saved jobs
       if (user) {
         try {
           const savedResponse = await getSavedJobs();
@@ -43,7 +42,6 @@ const Jobs = () => {
           setSavedJobs(new Set(savedJobIds));
         } catch (error) {
           console.error('Error fetching saved jobs:', error);
-          // Don't show error to user, just log it
         }
       }
     } catch (error) {
@@ -82,7 +80,7 @@ const Jobs = () => {
     setFilters({
       ...filters,
       [e.target.name]: e.target.value,
-      page: 1 // Reset page when filters change
+      page: 1 
     });
   };
 

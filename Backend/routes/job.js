@@ -14,7 +14,6 @@ router.get('/all', async (req, res) => {
   try {
     const { location, jobType, minSalary, maxSalary, page = 1, limit = 10 } = req.query;
     
-    // Build query
     const query = { status: 'approved' }; // Only get approved jobs
     
     if (location) query.location = new RegExp(location, 'i');
@@ -38,24 +37,20 @@ router.post('/save/:jobId', auth(['job_seeker']), async (req, res) => {
     const jobId = req.params.jobId;
     const userId = req.user.id;
 
-    // First check if the job exists
     const job = await Job.findById(jobId);
     if (!job) {
       return res.status(404).json({ message: 'Job not found' });
     }
 
-    // Find the user and update their savedJobs
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    // Initialize savedJobs array if it doesn't exist
     if (!user.savedJobs) {
       user.savedJobs = [];
     }
 
-    // Check if job is already saved
+    // if job is already saved
     if (user.savedJobs.includes(jobId)) {
       return res.status(400).json({ message: 'Job already saved' });
     }
@@ -63,7 +58,7 @@ router.post('/save/:jobId', auth(['job_seeker']), async (req, res) => {
     // Add the job to savedJobs
     user.savedJobs.push(jobId);
     
-    // Save with validation disabled to avoid otp validation
+
     await user.save({ validateBeforeSave: false });
 
     res.json({ message: 'Job saved successfully' });
@@ -83,7 +78,7 @@ router.delete('/unsave/:jobId', auth(['job_seeker']), async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Initialize savedJobs if it doesn't exist
+  
     if (!user.savedJobs) {
       user.savedJobs = [];
     }

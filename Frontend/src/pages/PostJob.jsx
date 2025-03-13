@@ -30,7 +30,7 @@ const PostJob = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Convert requirements string to array
+      
       const formattedData = {
         ...jobData,
         requirements: jobData.requirements.split(',').map(req => req.trim()),

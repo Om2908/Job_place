@@ -16,7 +16,7 @@ router.get('/', auth(['job_seeker']), async (req, res) => {
       try {
         const command = new GetObjectCommand({
           Bucket: process.env.AWS_BUCKET_NAME,
-          Key: user.profile.resume.replace(/^\//, '') // Remove leading slash if present
+          Key: user.profile.resume.replace(/^\//, '') 
         });
         const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
         user.profile.resume = url;

@@ -32,7 +32,7 @@ const EmployerDashboard = () => {
       setUpdatingStatus(true);
       await updateApplicationStatus(applicationId, newStatus);
       toast.success('Application status updated successfully');
-      await fetchDashboardData(); // Refresh dashboard data
+      await fetchDashboardData();
     } catch (error) {
       toast.error(error.message || 'Failed to update status');
     } finally {

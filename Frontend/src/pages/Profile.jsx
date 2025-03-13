@@ -81,7 +81,6 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Profile Content */}
           <div className="p-8 space-y-8">
             {/* Experience Section */}
             <motion.section

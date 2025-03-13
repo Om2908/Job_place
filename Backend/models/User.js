@@ -96,10 +96,9 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-// Method to compare password
+//  compare password
 userSchema.methods.comparePassword = async function(candidatePassword) {
   try {
-    // Make sure password field is selected
     const user = await this.constructor.findById(this._id).select('+password');
     if (!user) return false;
     
@@ -111,7 +110,6 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
   }
 };
 
-// Initialize profile fields with empty arrays/objects
 userSchema.pre('save', function(next) {
   if (!this.profile) {
     this.profile = {
@@ -124,7 +122,6 @@ userSchema.pre('save', function(next) {
   next();
 });
 
-// Delete existing model if it exists
 if (mongoose.models.User) {
   delete mongoose.models.User;
 }

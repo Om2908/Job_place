@@ -52,7 +52,7 @@ const JobSeekerDashboard = () => {
   return (
     <div className="min-h-screen pt-20 bg-gradient-to-br from-sky-50 to-indigo-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
+       
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-8">
           <div className="flex justify-between items-center">
             <div>

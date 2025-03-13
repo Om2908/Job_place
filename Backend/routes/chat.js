@@ -29,8 +29,6 @@ router.post('/messages', auth(['job_seeker']), async (req, res) => {
     });
 
     await message.save();
-    
-    // Populate sender info before sending response
     await message.populate('sender', 'name');
     
     // Emit to all connected clients

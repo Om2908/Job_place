@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 to-indigo-100">
-      {/* Hero Section */}
+    
       <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -47,7 +47,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Stats Section */}
+     
       <div className="py-16 bg-white/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -72,7 +72,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Features Section */}
+     
       <div className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -81,7 +81,7 @@ const Home = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
-            {/* Feature 1 */}
+
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +94,7 @@ const Home = () => {
               </p>
             </div>
 
-            {/* Feature 2 */}
+       
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,7 +107,7 @@ const Home = () => {
               </p>
             </div>
 
-            {/* Feature 3 */}
+         
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -123,7 +123,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Testimonial Section */}
       <div className="py-20 bg-white/80 backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -141,7 +140,7 @@ const Home = () => {
         </motion.div>
       </div>
 
-      {/* CTA Section */}
+    
       <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-50 to-indigo-50">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
