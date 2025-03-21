@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 const icalGenerator = require('ical-generator').default;
 const Notification = require('../models/notification');
 const User = require('../models/User');
+const Job = require('../models/Job');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -10,6 +11,65 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS
   }
 });
+
+// Controller functions
+const getUserNotifications = async (req, res) => {
+  try {
+    const notifications = await Notification.find({ recipient: req.user.id })
+      .sort({ createdAt: -1 });
+    res.json(notifications);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const markAsRead = async (req, res) => {
+  try {
+    const notification = await Notification.findOne({
+      _id: req.params.id,
+      recipient: req.user.id
+    });
+
+    if (!notification) {
+      return res.status(404).json({ message: 'Notification not found' });
+    }
+
+    notification.isRead = true;
+    await notification.save();
+    res.json(notification);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const markAllAsRead = async (req, res) => {
+  try {
+    await Notification.updateMany(
+      { recipient: req.user.id, isRead: false },
+      { isRead: true }
+    );
+    res.json({ message: 'All notifications marked as read' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const deleteNotification = async (req, res) => {
+  try {
+    const notification = await Notification.findOneAndDelete({
+      _id: req.params.id,
+      recipient: req.user.id
+    });
+
+    if (!notification) {
+      return res.status(404).json({ message: 'Notification not found' });
+    }
+
+    res.json({ message: 'Notification deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 class NotificationService {
   static async createNotification(data) {
@@ -47,14 +107,12 @@ class NotificationService {
   }
 
   static async notifyApplicationReceived(application, job, employer) {
-
-    // notification for employer and send mail
     await this.createNotification({
-      recipient: employer._id,
+      recipient: employer.id,
       type: 'APPLICATION_RECEIVED',
       title: 'New Application Received',
       message: `New application received for ${job.title}`,
-      relatedId: application._id,
+      relatedId: application.id,
       onModel: 'Application'
     });
 
@@ -65,8 +123,6 @@ class NotificationService {
        <p>You have received a new application for ${job.title}</p>`
     );
   }
-
-
 
   static async notifyInterviewScheduled(application, job, seeker, interviewDate) {
     // Create calendar event
@@ -85,11 +141,11 @@ class NotificationService {
 
     // Create notification for job seeker
     await this.createNotification({
-      recipient: seeker._id,
+      recipient: seeker.id,
       type: 'INTERVIEW_SCHEDULED',
       title: 'Interview Scheduled',
       message: `Your interview for ${job.title} has been scheduled`,
-      relatedId: application._id,
+      relatedId: application.id,
       onModel: 'Application'
     });
 
@@ -128,4 +184,10 @@ class NotificationService {
   }
 }
 
-module.exports = NotificationService;
+module.exports = {
+  getUserNotifications,
+  markAsRead,
+  markAllAsRead,
+  deleteNotification,
+  NotificationService
+};

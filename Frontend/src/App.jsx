@@ -16,6 +16,7 @@ import MyApplications from './pages/MyApplications';
 import JobSeekerDashboard from './pages/JobSeekerDashboard';
 import EmployerDashboard from './pages/EmployerDashboard';
 import { SocketProvider } from './context/SocketContext';
+import { NotificationProvider } from './context/NotificationContext';
 import AdminDashboard from './pages/AdminDashboard';
 import AuthCallback from './pages/AuthCallback';
 import SavedJobs from './pages/SavedJobs';
@@ -23,7 +24,7 @@ import UpdateProfile from './pages/UpdateProfile';
 import Profile from './pages/Profile';
 import CommunityChat from './components/CommunityChat';
 import ChatBot from './components/ChatBot';
-
+import Notifications from './pages/Notifications';
 export const AuthContext = createContext();
 
 function App() {
@@ -45,107 +46,113 @@ function App() {
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <SocketProvider>
-        <BrowserRouter>
-        <div><Toaster/></div> 
-          
-          <div className="min-h-screen bg-gray-50">
-            <Navbar />
-            <ChatBot />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/jobs" element={<Jobs />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/reset-password/:token" element={<ResetPassword />} />
-              <Route 
-                path="/post-job" 
-                element={
-                  <ProtectedRoute allowedRoles={['employer']}>
-                    <PostJob />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/apply/:jobId" 
-                element={
-                  <ProtectedRoute allowedRoles={['job_seeker']}>
-                    <Apply />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/my-applications" 
-                element={
-                  <ProtectedRoute allowedRoles={['job_seeker']}>
-                    <MyApplications />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/dashboard" 
-                element={
-                  <ProtectedRoute allowedRoles={['job_seeker']}>
-                    <JobSeekerDashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/employer/dashboard" 
-                element={
-                  <ProtectedRoute allowedRoles={['employer']}>
-                    <EmployerDashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin/dashboard" 
-                element={
-                  <ProtectedRoute allowedRoles={['admin']}>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route path="/auth/callback" element={<AuthCallback />} />
-              <Route 
-                path="/saved-jobs" 
-                element={
-                  <ProtectedRoute allowedRoles={['job_seeker']}>
-                    <SavedJobs />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/update-profile" 
-                element={
-                  <ProtectedRoute allowedRoles={['job_seeker']}>
-                    <UpdateProfile />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/profile" 
-                element={
-                  <ProtectedRoute allowedRoles={['job_seeker']}>
-                    <Profile />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/community" 
-                element={
-                  <ProtectedRoute allowedRoles={['job_seeker']}>
-                    <CommunityChat />
-                  </ProtectedRoute>
-                } 
-              />
-              
-             
-              
-             
-            </Routes>
-          </div>
-        </BrowserRouter>
+        <NotificationProvider>
+          <BrowserRouter>
+            <div><Toaster/></div> 
+            
+            <div className="min-h-screen bg-gray-50">
+              <Navbar />
+              <ChatBot />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/jobs" element={<Jobs />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password/:token" element={<ResetPassword />} />
+                <Route 
+                  path="/post-job" 
+                  element={
+                    <ProtectedRoute allowedRoles={['employer']}>
+                      <PostJob />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/apply/:jobId" 
+                  element={
+                    <ProtectedRoute allowedRoles={['job_seeker']}>
+                      <Apply />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/my-applications" 
+                  element={
+                    <ProtectedRoute allowedRoles={['job_seeker']}>
+                      <MyApplications />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/dashboard" 
+                  element={
+                    <ProtectedRoute allowedRoles={['job_seeker']}>
+                      <JobSeekerDashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/employer/dashboard" 
+                  element={
+                    <ProtectedRoute allowedRoles={['employer']}>
+                      <EmployerDashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/dashboard" 
+                  element={
+                    <ProtectedRoute allowedRoles={['admin']}>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/notifications" 
+                  element={
+                    <ProtectedRoute>
+                      <Notifications />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route path="/auth/callback" element={<AuthCallback />} />
+                <Route 
+                  path="/saved-jobs" 
+                  element={
+                    <ProtectedRoute allowedRoles={['job_seeker']}>
+                      <SavedJobs />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/profile" 
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/update-profile" 
+                  element={
+                    <ProtectedRoute>
+                      <UpdateProfile />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/community" 
+                  element={
+                    <ProtectedRoute>
+                      <CommunityChat />
+                    </ProtectedRoute>
+                  } 
+                />
+              </Routes>
+            </div>
+          </BrowserRouter>
+        </NotificationProvider>
       </SocketProvider>
     </AuthContext.Provider>
   );

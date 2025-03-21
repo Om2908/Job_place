@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/auth');
+const auth = require('../middleware/auth');
 const {
   getUserNotifications,
   markAsRead,
@@ -8,9 +8,9 @@ const {
   deleteNotification
 } = require('../controllers/notification');
 
-router.get('/', protect, getUserNotifications);
-router.put('/:id/read', protect, markAsRead);
-router.put('/mark-all-read', protect, markAllAsRead);
-router.delete('/:id', protect, deleteNotification);
+router.get('/', auth(['job_seeker']), getUserNotifications);
+router.put('/:id/read', markAsRead);
+router.put('/mark-all-read',auth(['job_seeker']), markAllAsRead);
+router.delete('/:id', auth(['job_seeker']), deleteNotification);
 
-module.exports = router; 
+module.exports = router;

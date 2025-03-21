@@ -98,6 +98,7 @@ const dashboardRoutes = require('./routes/dashboard');
 const adminRoutes = require('./routes/admin');
 const profileRoutes = require('./routes/profile');
 const chatRoutes = require('./routes/chat'); 
+const notificationRoutes = require('./routes/notification');
 
 app.use('/auth', authRoutes);
 app.use('/job', jobRoutes);
@@ -105,7 +106,9 @@ app.use('/application', applicationRoutes);
 app.use('/dashboard', dashboardRoutes);
 app.use('/admin', adminRoutes);
 app.use('/profile', profileRoutes);
-app.use('/chat', chatRoutes);  
+app.use('/chat', chatRoutes);
+app.use('/notification',notificationRoutes)
+
 
 app.use(express.urlencoded({ extended: true }));
 

@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../App';
 import { logout } from '../../services/authService';
 import { toast } from 'react-hot-toast';
+import NotificationBell from '../NotificationBell';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -63,14 +64,31 @@ const Navbar = () => {
                   </>
                 )}
                 {user.role === 'employer' && (
+                  <>
+                    <Link 
+                      to="/post-job" 
+                      className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                    >
+                      Post Job
+                    </Link>
+                    <Link 
+                      to="/employer/dashboard" 
+                      className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                    >
+                      Dashboard
+                    </Link>
+                  </>
+                )}
+                {user.role === 'admin' && (
                   <Link 
-                    to="/employer/dashboard" 
+                    to="/admin/dashboard" 
                     className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                   >
-                    Dashboard
+                     Dashboard
                   </Link>
                 )}
                 <div className="flex items-center space-x-4">
+                  <NotificationBell />
                   <span className="text-gray-600 text-sm">Hi, {user.name}</span>
                   <button
                     onClick={handleLogout}
@@ -158,8 +176,26 @@ const Navbar = () => {
                   </>
                 )}
                 {user.role === 'employer' && (
+                  <>
+                    <Link 
+                      to="/post-job"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                    >
+                      Post Job
+                    </Link>
+                    <Link 
+                      to="/employer/dashboard"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                    >
+                      Dashboard
+                    </Link>
+                  </>
+                )}
+                {user.role === 'admin' && (
                   <Link 
-                    to="/employer/dashboard"
+                    to="/admin/dashboard"
                     onClick={() => setIsOpen(false)}
                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50"
                   >
@@ -167,7 +203,10 @@ const Navbar = () => {
                   </Link>
                 )}
                 <div className="px-3 py-2 border-t border-gray-200 mt-2">
-                  <span className="block text-gray-600 font-medium mb-2">Hi, {user.name}</span>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-gray-600 font-medium">Hi, {user.name}</span>
+                    <NotificationBell />
+                  </div>
                   <button
                     onClick={() => {
                       handleLogout();

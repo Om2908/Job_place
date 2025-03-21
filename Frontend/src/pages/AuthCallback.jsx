@@ -22,11 +22,11 @@ const AuthCallback = () => {
 
     if (token) {
       try {
-        console.log("Received token:", token); // Debug log
+        console.log("Received token:", token); 
         localStorage.setItem('token', token);
         
         const user = getCurrentUser();
-        console.log("Current user:", user); // Debug log
+        console.log("Current user:", user); 
         
         if (!user) {
           throw new Error('Failed to get user details');
@@ -44,7 +44,7 @@ const AuthCallback = () => {
           navigate('/dashboard');
         }
       } catch (error) {
-        console.error("Auth callback error:", error); // Error log
+        console.error("Auth callback error:", error); 
         toast.error('Failed to process login');
         navigate('/login');
       }
