@@ -20,8 +20,7 @@ Tech Stack Used:
 - Authentication: JWT-based auth ( Passport.js)
 
 My Skills
-
-🌟 Contributions Welcome! 🌟
+🌟
 Set-Up and Installation:
 To get started with CarrerHub, follow these simple steps:
 
